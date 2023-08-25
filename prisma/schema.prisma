@@ -51,8 +51,8 @@ model User {
 
 // course contains many units
 model Course {
-  id    String @id @default(cuid())
-  name  String
+  id String @id @default(cuid())
+  name String
   image String
   units Unit[]
 }
@@ -74,7 +74,7 @@ model Chapter {
   unitId String
 
   name               String
-  youtubeSearchQuery String
+  youtubeSearchQuery String // returned by Open Ai API for searching via youtube API
   videoId            String?
   summary            String?    @db.VarChar(3000)
   unit               Unit       @relation(fields: [unitId], references: [id])
