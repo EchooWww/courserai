@@ -42,8 +42,6 @@ const CreateCourseForm = (props: Props) => {
   });
 
   function onSubmit(data: Input) {
-    console.log(data);
-
     if (data.units.some((unit) => unit === "")) {
       toast({
         title: "Error",
