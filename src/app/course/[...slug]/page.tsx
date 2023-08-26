@@ -3,6 +3,7 @@ import React from "react";
 import { prisma } from "@/lib/db";
 import CourseSideBar from "@/components/CourseSideBar";
 import MainVideoSummary from "@/components/MainVideoSummary";
+import QuizCards from "@/components/QuizCards";
 
 type Props = {
   params: {
@@ -19,7 +20,11 @@ const CoursePage = async ({ params: { slug } }: Props) => {
     include: {
       units: {
         include: {
-          chapters: true,
+          chapters: {
+            include: {
+              questions: true,
+            },
+          },
         },
       },
     },
@@ -53,7 +58,7 @@ const CoursePage = async ({ params: { slug } }: Props) => {
               unit={unit}
               unitIndex={unitIndex}
             />
-            {/* <QuizCards /> */}
+            <QuizCards chapter={chapter} />
           </div>
         </div>
       </div>
