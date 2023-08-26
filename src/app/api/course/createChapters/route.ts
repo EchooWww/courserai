@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createChapterSchema } from "@/validators/course";
+import { createChaptersSchema } from "@/validators/course";
 import { ZodError } from "zod";
 import { strict_output } from "@/lib/gpt";
 import { getUnsplashImage } from "@/lib/unsplash";
@@ -8,7 +8,7 @@ import { prisma } from "@/lib/db";
 export async function POST(req: Request, res: Response) {
   try {
     const body = await req.json();
-    const { title, units } = createChapterSchema.parse(body);
+    const { title, units } = createChaptersSchema.parse(body);
 
     type outputUnits = {
       title: string;

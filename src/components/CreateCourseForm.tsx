@@ -2,7 +2,7 @@
 import React from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { z } from "zod";
-import { createChapterSchema } from "@/validators/course";
+import { createChaptersSchema } from "@/validators/course";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "./ui/input";
@@ -10,22 +10,69 @@ import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import { Plus, Trash } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
-type Input = z.infer<typeof createChapterSchema>;
+type Input = z.infer<typeof createChaptersSchema>;
 
 const CreateCourseForm = (props: Props) => {
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const { mutate: createChapters, isLoading } = useMutation({
+    mutationFn: async ({ title, units }: Input) => {
+      const response = await axios.post("/api/course/createChapters", {
+        title,
+        units,
+      });
+      return response.data;
+    },
+  });
+
   const form = useForm<Input>({
-    resolver: zodResolver(createChapterSchema),
+    resolver: zodResolver(createChaptersSchema),
     defaultValues: {
       title: "",
       units: ["", "", ""],
     },
   });
+
   function onSubmit(data: Input) {
     console.log(data);
+
+    if (data.units.some((unit) => unit === "")) {
+      toast({
+        title: "Error",
+        description: "Please fill all the units",
+        variant: "destructive",
+      });
+      return;
+    }
+    createChapters(data, {
+      onSuccess: ({ course_id }) => {
+        toast({
+          title: "Success",
+          description:
+            "Course created successfully, generating the contents...",
+        });
+        router.push(`/create/${course_id}`);
+      },
+      onError: (error) => {
+        console.error(error);
+        toast({
+          title: "Error",
+          description: "Something went wrong",
+          variant: "destructive",
+        });
+      },
+    });
   }
+
+  form.watch();
 
   return (
     <div className="w-full">
@@ -42,7 +89,7 @@ const CreateCourseForm = (props: Props) => {
                     <Input
                       placeholder="Enter the main topic of the course"
                       {...field}
-                    ></Input>
+                    />
                   </FormControl>
                 </FormItem>
               );
@@ -74,9 +121,9 @@ const CreateCourseForm = (props: Props) => {
                           </FormLabel>
                           <FormControl className="flex-[6]">
                             <Input
-                              placeholder="Enter the subtopic of the course"
+                              placeholder="Enter subtopic of the course"
                               {...field}
-                            ></Input>
+                            />
                           </FormControl>
                         </FormItem>
                       );
@@ -87,7 +134,7 @@ const CreateCourseForm = (props: Props) => {
             })}
           </AnimatePresence>
 
-          <div className="flex item-center justify-center mt-4">
+          <div className="flex items-center justify-center mt-4">
             <Separator className="flex-[1]" />
             <div className="mx-4">
               <Button
@@ -95,18 +142,19 @@ const CreateCourseForm = (props: Props) => {
                 variant="secondary"
                 className="font-semibold"
                 onClick={() => {
-                  form.setValue("units", [...form.getValues().units, ""]);
+                  form.setValue("units", [...form.watch("units"), ""]);
                 }}
               >
                 Add Unit
                 <Plus className="w-4 h-4 ml-2 text-green-500" />
               </Button>
+
               <Button
                 type="button"
                 variant="secondary"
                 className="font-semibold ml-2"
                 onClick={() => {
-                  form.setValue("units", form.getValues().units.slice(0, -1));
+                  form.setValue("units", form.watch("units").slice(0, -1));
                 }}
               >
                 Remove Unit
@@ -115,8 +163,13 @@ const CreateCourseForm = (props: Props) => {
             </div>
             <Separator className="flex-[1]" />
           </div>
-          <Button type="submit" className="w-full mt-6" size="lg">
-            Let's Go!
+          <Button
+            disabled={isLoading}
+            type="submit"
+            className="w-full mt-6"
+            size="lg"
+          >
+            Lets Go!
           </Button>
         </form>
       </Form>
