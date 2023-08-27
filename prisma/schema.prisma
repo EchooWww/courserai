@@ -63,7 +63,7 @@ model Unit {
   courseId String
 
   name     String
-  course   Course    @relation(fields: [courseId], references: [id])
+  course   Course    @relation(fields: [courseId], references: [id],onDelete: Cascade)
   chapters Chapter[]
 
   @@index([courseId], name: "courseId")
@@ -77,7 +77,7 @@ model Chapter {
   youtubeSearchQuery String // returned by Open Ai API for searching via youtube API
   videoId            String?
   summary            String?    @db.VarChar(3000)
-  unit               Unit       @relation(fields: [unitId], references: [id])
+  unit               Unit       @relation(fields: [unitId], references: [id], onDelete: Cascade)
   questions          Question[]
 
   @@index([unitId], name: "unitId")
@@ -90,7 +90,7 @@ model Question {
   question String  @db.VarChar(3000)
   answer   String  @db.VarChar(3000)
   options  String  @db.VarChar(3000)
-  chapter  Chapter @relation(fields: [chapterId], references: [id])
+  chapter  Chapter @relation(fields: [chapterId], references: [id],onDelete: Cascade)
 
   @@index([chapterId], name: "chapterId")
 }

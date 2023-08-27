@@ -4,6 +4,8 @@ import { prisma } from "@/lib/db";
 import CourseSideBar from "@/components/CourseSideBar";
 import MainVideoSummary from "@/components/MainVideoSummary";
 import QuizCards from "@/components/QuizCards";
+import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Props = {
   params: {
@@ -45,7 +47,8 @@ const CoursePage = async ({ params: { slug } }: Props) => {
   if (!chapter) {
     return redirect(`/gallery`);
   }
-
+  const nextChapter = unit.chapters[chapterIndex + 1];
+  const prevChapter = unit.chapters[chapterIndex - 1];
   return (
     <div className="">
       <CourseSideBar course={course} currentChapterId={chapter.id} />
@@ -59,6 +62,46 @@ const CoursePage = async ({ params: { slug } }: Props) => {
               unitIndex={unitIndex}
             />
             <QuizCards chapter={chapter} />
+          </div>
+          <div className="flex-[1] h-[1px] mt-4 text-gray-500 bg-gray-500">
+            <div className="flex pb-8 flex-row">
+              {prevChapter && (
+                <Link
+                  className="flex mt-4 mr-auto w-fit"
+                  href={`/course/${course.id}/${unitIndex}/${chapterIndex - 1}`}
+                >
+                  <div className="flex items-center">
+                    <ChevronLeft className="w-6 h-6 mr-1" />
+                    <div className="flex flex-col items-start">
+                      <span className="text-sm text-secondary-foreground/60">
+                        Previous
+                      </span>
+                      <span className="text-xl font-bold">
+                        {prevChapter.name}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              )}
+              {nextChapter && (
+                <Link
+                  className="flex mt-4 mr-auto w-fit"
+                  href={`/course/${course.id}/${unitIndex}/${chapterIndex + 1}`}
+                >
+                  <div className="flex items-center">
+                    <div className="flex flex-col items-start">
+                      <span className="text-sm text-secondary-foreground/60">
+                        Next
+                      </span>
+                      <span className="text-xl font-bold">
+                        {nextChapter.name}
+                      </span>
+                    </div>
+                    <ChevronRight className="w-6 h-6 ml-1" />
+                  </div>
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>
