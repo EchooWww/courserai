@@ -1,34 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🤖️ Courserai
 
-## Getting Started
+### Introduction
 
-First, run the development server:
+Courserai is a web application that allows users to generate their own customized course based on the topic and units they provide. For each course, the application will generate a list of videos, summary, and quizzes that are relevant to the topic and units provided by the user.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application is built using Next.js 13, React 18 for the frontend and backend, Google OAuth for user authentication, Prisma for data modeling and database access, and planet-scale database FaunaDB for data storage. For the UI, the application uses Tailwind CSS and Chadcn UI.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+For course generation, the app uses OpenAI's GPT-3.5-turbo model to generate Youtube search queries based on user input, and then use the Youtube API to fetch the videos. The app also uses youtube-transcript-api to fetch the transcript of each video, and then use OpenAI's GPT-3.5-turbo model to generate a summary and quiz questions based on the transcript.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+For hosting, the app is serverlessly deployed with DigitalOcean, with Github Actions for CI/CD.
