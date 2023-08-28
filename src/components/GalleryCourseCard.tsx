@@ -32,7 +32,7 @@ const GalleryCourseCard = ({ course }: Props) => {
         </Link>
       </div>
 
-      <div className="p-4">
+      <div className="p-4 hidden sm:block">
         <h4 className="text-sm text-secondary-foreground/60">Units</h4>
         <div className="space-y-1">
           {course.units.map((unit, unitIndex) => {

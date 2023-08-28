@@ -39,7 +39,7 @@ const CreateChapters = async ({ params: { courseId } }: Props) => {
         Course Name
       </h5>
       <h1 className="text-5xl font-bold">{course.name}</h1>
-      <div className="flex p-4 m-5 border-none bg-secondary">
+      <div className="flex p-4 mt-5 border-none bg-secondary">
         <Info className="w-12 h-12 mr-3 text-blue-400" />
         <div>
           We generated chapters for you based on the units you provided. Look

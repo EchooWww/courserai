@@ -33,7 +33,7 @@ const ConfirmChapters = ({ course }: Props) => {
     }, 0);
   }, [course.units]);
   return (
-    <div className="w-full mt-4">
+    <div className="w-full mt-2">
       {course.units.map((unit, unitIndex) => {
         return (
           <div key={unit.id} className="mt-5">
