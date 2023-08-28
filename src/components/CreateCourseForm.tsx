@@ -56,7 +56,7 @@ const CreateCourseForm = ({ isPro }: Props) => {
         toast({
           title: "Success",
           description:
-            "Course created successfully, generating the contents...",
+            "Course created successfully, now we will generate contents for you",
         });
         router.push(`/create/${course_id}`);
       },

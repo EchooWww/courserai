@@ -21,7 +21,7 @@ const GalleryCourseCard = ({ course }: Props) => {
         >
           <Image
             src={course.image || ""}
-            className="object-cover w-full max-h-[300px] max-w-[300px] rounded-t-lg "
+            className="mx-0 rounded-t-lg"
             width={300}
             height={300}
             alt="picture of a course"
@@ -36,6 +36,7 @@ const GalleryCourseCard = ({ course }: Props) => {
         <h4 className="text-sm text-secondary-foreground/60">Units</h4>
         <div className="space-y-1">
           {course.units.map((unit, unitIndex) => {
+            if (unitIndex > 2) return null;
             return (
               <Link
                 href={`/course/${course.id}/${unitIndex}/0`}
@@ -46,6 +47,7 @@ const GalleryCourseCard = ({ course }: Props) => {
               </Link>
             );
           })}
+          ...
         </div>
       </div>
     </div>

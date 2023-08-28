@@ -47,6 +47,7 @@ const CreateChapters = async ({ params: { courseId } }: Props) => {
           contents for your course.
         </div>
       </div>
+      <ConfirmChapters course={course} />
     </div>
   );
 };
