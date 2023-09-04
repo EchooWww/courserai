@@ -80,30 +80,26 @@
 ```bash
 ├── README.md
 ├── components.json
-├── docker-compose.yml
-├── next-env.d.ts
+├── docker-compose.yml ## docker-compose file for prisma
 ├── next.config.js
 ├── package-lock.json
 ├── package.json
 ├── postcss.config.js
-├── prisma
+├── prisma ## prisma schema for database setup
 │   └── schema.prisma
-├── public
-│   ├── next.svg
-│   └── vercel.svg
 ├── src
-│   ├── app
-│   │   ├── api
+│   ├── app ## Routes for the whole app with App Router
+│   │   ├── api ## api routes to handle backend requests
 │   │   │   ├── auth ## route for user authentication
 │   │   │   │   └── [...nextauth]
 │   │   │   │       └── route.ts
-│   │   │   ├── chapter ## route for chapter creation
+│   │   │   ├── chapter ## route for chapter creation backend
 │   │   │   │   └── getInfo
 │   │   │   │       └── route.ts
-│   │   │   ├── course ## route for course creation
+│   │   │   ├── course ## route for course creation backend
 │   │   │   │   └── createChapters
 │   │   │   │       └── route.ts
-│   │   │   ├── stripe ## route for stripe subscription
+│   │   │   ├── stripe ## route for stripe subscription backend
 │   │   │   │   └── route.ts
 │   │   │   └── webhook
 │   │   │       └── route.ts
