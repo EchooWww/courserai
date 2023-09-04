@@ -16,7 +16,7 @@
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![shadcn](https://img.shields.io/badge/SHADCN/UI-000000?style=for-the-badge&logo=shadertoy&logoColor=white)
 
-#### Use authentication and database
+#### User authentication and database
 
 ![Google OAuth](https://img.shields.io/badge/Google%20OAuth-4285F4?style=for-the-badge&logo=google&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-1B222D?style=for-the-badge&logo=prisma&logoColor=white)
